@@ -1,4 +1,4 @@
-Bu tool web sitesini tarayarak hayvan resimlerini tarar, hayvan isimlerini yazar
+Bu tool web sitesini tarayarak hayvan resimlerini bulur, isimlerini yazar,gruplandırır
 Script içeriği profilimde var.
 
 İnstall edilecek uygulamalar:
