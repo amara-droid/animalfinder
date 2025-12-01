@@ -3,7 +3,7 @@ Script içeriği profilimde var.
 
 İnstall edilecek uygulamalar:
     sudo apt install python3 python3-pip
-    pip3 install requests beautifulsoup
+         pip3 install requests beautifulsoup
 
 çalıştırma:
     chmod +x animal_image_finder.py
