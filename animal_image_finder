@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+import requests
+from bs4 import BeautifulSoup
+import re
+
+ANIMALS = [
+    "cat", "dog", "lion", "tiger", "bear", "wolf",
+    "bird", "eagle", "fox", "horse", "monkey",
+    "snake", "shark", "fish", "cow", "sheep", "goat"
+]
+
+def is_animal_image(url):
+    url_lower = url.lower()
+    return any(animal in url_lower for animal in ANIMALS)
+
+def find_animal_images(website):
+    try:
+        r = requests.get(website, timeout=10)
+    except Exception as e:
+        print(f"[!] Siteye bağlanırken hata oluştu: {e}")
+        return []
+
+    soup = BeautifulSoup(r.text, "html.parser")
+    images = soup.find_all("img")
+
+    animal_images = []
+
+    for img in images:
+        src = img.get("src")
+        if not src:
+            continue
+
+        # URL mutlak değilse düzeltelim
+        if src.startswith("//"):
+            src = "https:" + src
+        elif src.startswith("/"):
+            src = website.rstrip("/") + src
+
+        # Hayvan içeren dosya ismini yakalayalım
+        if is_animal_image(src):
+            animal_images.append(src)
+
+    return animal_images
+
+
+if __name__ == "__main__":
+    site = input("Site URL girin: ")
+
+    print("\n[+] Site taranıyor...\n")
+    results = find_animal_images(site)
+
+    if not results:
+        print("❌ Hayvan resmi bulunamadı.")
+    else:
+        print("🐾 Bulunan hayvan resimleri:")
+        for img in results:
+            print(" - " + img)
